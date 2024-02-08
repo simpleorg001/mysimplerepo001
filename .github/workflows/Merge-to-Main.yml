@@ -6,15 +6,16 @@ on:
       - opened
       - reopened
       - synchronize
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   Check_HEAD_Branch:
     runs-on: ubuntu-latest
     steps:
-      - name: get-team-members
-        id: get-members
-        shell: bash
-        run: echo ::set-output name=data::$(gh repo list)
       - name: 📢 Verify BASE and HEAD branches
+        shell: pwsh
         run: |
           if [[  ${{ github.base_ref }} == "main" ]]; then
             if [[ ${{ github.head_ref }} =~ ^rc/.*  ||  ${{ github.head_ref }} =~ ^hfc/.* ]]; then
@@ -26,3 +27,4 @@ jobs:
                 echo "::error::${{ github.head_ref }} is not allowed to merge directly into main" && exit 1;
             fi
           fi
+          Write-Host "github.event.pull_request.user.login"
