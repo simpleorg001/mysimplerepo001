@@ -11,7 +11,8 @@ env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  Check_HEAD_Branch:
+  Merge_Validation:
+    name: 🔔 Confirm SOURCE branch is allowed
     runs-on: ubuntu-latest
     steps:
       - name: 📢 Verify BASE and HEAD branches
